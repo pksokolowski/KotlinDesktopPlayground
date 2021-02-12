@@ -6,8 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import modules.mainModule
+import org.koin.core.context.startKoin
 
 fun main() = Window {
+    startKoin {
+        modules(mainModule)
+    }
+
     var text by remember { mutableStateOf("Hello, World!") }
 
     MaterialTheme {

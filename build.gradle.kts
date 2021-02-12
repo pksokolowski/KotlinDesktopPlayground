@@ -17,7 +17,13 @@ repositories {
 }
 
 dependencies {
+    val koinVersion = "2.2.2"
+    val coroutinesVersion = "1.4.2"
+
     implementation(compose.desktop.currentOs)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("org.koin:koin-core:$koinVersion")
 }
 
 tasks.withType<KotlinCompile>() {
