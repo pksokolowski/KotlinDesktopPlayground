@@ -6,8 +6,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import feature.dependencies.Dependency
 import modules.mainModule
 import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.inject
 
 fun main() = Window {
     startKoin {
@@ -16,9 +18,11 @@ fun main() = Window {
 
     var text by remember { mutableStateOf("Hello, World!") }
 
+    val dependency by inject(Dependency::class.java)
+
     MaterialTheme {
         Button(onClick = {
-            text = "Hello, Desktop!"
+            text = dependency.getString()
         }) {
             Text(text)
         }
