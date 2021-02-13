@@ -1,10 +1,12 @@
 import androidx.compose.desktop.Window
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import feature.dependencies.Dependency
 import modules.mainModule
@@ -26,7 +28,12 @@ fun main() {
         @Suppress("FunctionName")
         fun DialogButton() {
             Row {
-                Text("Some label")
+                Text(
+                    text = "Some label",
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 8.dp, 0.dp)
+                        .align(Alignment.CenterVertically)
+                )
                 Button({
                     showDialog = true
                 }) {
@@ -36,26 +43,28 @@ fun main() {
         }
 
         MaterialTheme {
-
             Column {
                 DialogButton()
-
-                Button(onClick = {
-                    text = dependency.getString()
-                }) {
-                    Text(text)
-                }
-
             }
 
             if (showDialog) {
-                Dialog({
-                    showDialog = false
-                }) {
-                    Text("Dialog's content :)")
-                    Button({ showDialog = false }) {
-                        Text("Hide dialog")
+                Dialog(
+                    onDismissRequest = { showDialog = false }
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Button(
+                            onClick = { showDialog = false },
+                            modifier = Modifier
+                                .fillMaxWidth(0.9f)
+                                .align(Alignment.CenterHorizontally)
+                        ) {
+                            Text("Hide dialog")
+                        }
                     }
+
                 }
             }
         }
