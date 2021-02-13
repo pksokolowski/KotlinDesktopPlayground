@@ -1,8 +1,9 @@
 package modules
 
+import IMainViewModel
 import MainViewModel
 import org.koin.dsl.module
 
 val mainModule = module {
-    factory { MainViewModel() }
+    factory { MainViewModel() as IMainViewModel }
 }

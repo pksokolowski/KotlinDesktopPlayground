@@ -1,10 +1,7 @@
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -26,55 +23,60 @@ fun main() {
     }
 
     Window {
-        val viewModel by inject(MainViewModel::class.java)
+        val viewModel by inject(IMainViewModel::class.java)
 
         val inputText = viewModel.inputText.collectAsState()
         val outputList = viewModel.outputList.collectAsState()
         val showDialog = viewModel.showDialog.collectAsState()
 
         MaterialTheme {
-            Column(
-                verticalArrangement = Arrangement.SpaceAround
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
-                DialogButton(
-                    onClick = { viewModel.showDialog() }
-                )
-
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                Column(
+                    verticalArrangement = Arrangement.Top
                 ) {
-                    EditorView(
-                        text = inputText.value,
-                        onTextChanged = { input ->
-                            viewModel.setInputText(input)
-                        }
+                    DialogButton(
+                        label = "show dialog button",
+                        onClick = { viewModel.showDialog() }
                     )
 
-                    Button(
-                        onClick = {
-                            viewModel.addInputTextToOutputList()
-                        },
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(8.dp)
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Text("Add")
+                        EditorView(
+                            text = inputText.value,
+                            onTextChanged = { input ->
+                                viewModel.setInputText(input)
+                            }
+                        )
+
+                        Button(
+                            onClick = {
+                                viewModel.addInputTextToOutputList()
+                            },
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(8.dp)
+                        ) {
+                            Text("Add")
+                        }
+                    }
+
+                    Column {
+                        outputList.value.forEach { item ->
+                            Text(item)
+                        }
                     }
                 }
 
-                Column {
-                    outputList.value.forEach { item ->
-                        Text(item)
-                    }
-                }
+                MainDialog(
+                    shown = showDialog.value,
+                    onDismiss = { viewModel.dismissDialog() }
+                )
             }
-
-            MainDialog(
-                shown = showDialog.value,
-                onDismiss = { viewModel.dismissDialog() }
-            )
         }
-
     }
 }
 
@@ -145,10 +147,10 @@ private fun MainDialog(shown: Boolean, onDismiss: () -> Unit) {
 
 @Composable
 @Suppress("FunctionName")
-fun DialogButton(onClick: () -> Unit) {
+fun DialogButton(label: String, onClick: () -> Unit) {
     Row {
         Text(
-            text = "Some label",
+            text = label,
             modifier = Modifier
                 .padding(0.dp, 0.dp, 8.dp, 0.dp)
                 .align(Alignment.CenterVertically),

@@ -1,27 +1,29 @@
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlin.properties.Delegates
 
-class MainViewModel {
-    private var outputListSource = listOf<String>()
+class MainViewModel : IMainViewModel {
+    override val inputText = MutableStateFlow("")
+    override val outputList = MutableStateFlow(listOf<String>())
+    override val showDialog = MutableStateFlow(false)
 
-    val inputText = MutableStateFlow("")
-    val outputList = MutableStateFlow(outputListSource)
-    val showDialog = MutableStateFlow(false)
+    private var outputListSource by Delegates.observable(outputList.value) { _, _, new ->
+        outputList.value = new
+    }
 
-    fun setInputText(text: String) {
+    override fun setInputText(text: String) {
         inputText.value = text
     }
 
-    fun addInputTextToOutputList() {
+    override fun addInputTextToOutputList() {
         outputListSource = outputListSource + inputText.value
-        outputList.value = outputListSource
         inputText.value = ""
     }
 
-    fun showDialog() {
+    override fun showDialog() {
         showDialog.value = true
     }
 
-    fun dismissDialog() {
+    override fun dismissDialog() {
         showDialog.value = false
     }
 }
