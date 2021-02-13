@@ -1,4 +1,5 @@
 import androidx.compose.desktop.Window
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -53,18 +54,41 @@ fun main() {
                 ) {
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Button(
-                            onClick = { showDialog = false },
+
+                        Row(
                             modifier = Modifier
-                                .fillMaxWidth(0.9f)
-                                .align(Alignment.CenterHorizontally)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            Text("Hide dialog")
+                            Text("click me 1", modifier = Modifier
+                                .clickable { }
+                                .padding(30.dp)
+                            )
+
+                            Text("click me 2", modifier = Modifier
+                                .padding(30.dp)
+                                .clickable { }
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Button(
+                                onClick = { showDialog = false },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.9f)
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(bottom = 8.dp)
+                            ) {
+                                Text("Hide dialog")
+                            }
                         }
                     }
-
                 }
             }
         }
