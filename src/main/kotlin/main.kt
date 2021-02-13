@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,17 +23,49 @@ fun main() {
         modules(mainModule)
     }
 
+    val dependency by inject(Dependency::class.java)
+
     Window {
-        var text by remember { mutableStateOf("Hello, World!") }
+        var inputText by remember { mutableStateOf("") }
+        var outputList = remember { mutableStateListOf<String>() }
         var showDialog by remember { mutableStateOf(false) }
 
-        val dependency by inject(Dependency::class.java)
-
         MaterialTheme {
-            Column {
+            Column(
+                verticalArrangement = Arrangement.SpaceAround
+            ) {
                 DialogButton(
                     onClick = { showDialog = true }
                 )
+
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    EditorView(
+                        text = inputText,
+                        onTextChanged = { input ->
+                            inputText = input
+                        }
+                    )
+
+                    Button(
+                        onClick = {
+                            outputList.add(inputText)
+                            inputText = ""
+                        },
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(8.dp)
+                    ) {
+                        Text("Add")
+                    }
+                }
+
+                Column {
+                    outputList.forEach { item ->
+                        Text(item)
+                    }
+                }
             }
 
             MainDialog(
@@ -42,6 +75,17 @@ fun main() {
         }
 
     }
+}
+
+@Composable
+@Suppress("FunctionName")
+private fun EditorView(text: String, onTextChanged: (String) -> Unit) {
+    TextField(
+        value = text,
+        onValueChange = { newText ->
+            onTextChanged(newText)
+        }
+    )
 }
 
 @Composable
