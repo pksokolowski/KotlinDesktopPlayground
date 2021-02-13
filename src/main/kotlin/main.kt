@@ -5,7 +5,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,45 +14,45 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import feature.dependencies.Dependency
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.mainModule
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
 
+@ExperimentalCoroutinesApi
 fun main() {
     startKoin {
         modules(mainModule)
     }
 
-    val dependency by inject(Dependency::class.java)
-
     Window {
-        var inputText by remember { mutableStateOf("") }
-        var outputList = remember { mutableStateListOf<String>() }
-        var showDialog by remember { mutableStateOf(false) }
+        val viewModel by inject(MainViewModel::class.java)
+
+        val inputText = viewModel.inputText.collectAsState()
+        val outputList = viewModel.outputList.collectAsState()
+        val showDialog = viewModel.showDialog.collectAsState()
 
         MaterialTheme {
             Column(
                 verticalArrangement = Arrangement.SpaceAround
             ) {
                 DialogButton(
-                    onClick = { showDialog = true }
+                    onClick = { viewModel.showDialog() }
                 )
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     EditorView(
-                        text = inputText,
+                        text = inputText.value,
                         onTextChanged = { input ->
-                            inputText = input
+                            viewModel.setInputText(input)
                         }
                     )
 
                     Button(
                         onClick = {
-                            outputList.add(inputText)
-                            inputText = ""
+                            viewModel.addInputTextToOutputList()
                         },
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
@@ -62,15 +63,15 @@ fun main() {
                 }
 
                 Column {
-                    outputList.forEach { item ->
+                    outputList.value.forEach { item ->
                         Text(item)
                     }
                 }
             }
 
             MainDialog(
-                shown = showDialog,
-                onDismiss = { showDialog = false }
+                shown = showDialog.value,
+                onDismiss = { viewModel.dismissDialog() }
             )
         }
 

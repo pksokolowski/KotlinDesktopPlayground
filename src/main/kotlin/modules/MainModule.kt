@@ -1,8 +1,8 @@
 package modules
 
-import feature.dependencies.Dependency
+import MainViewModel
 import org.koin.dsl.module
 
 val mainModule = module {
-    single { Dependency() }
+    factory { MainViewModel() }
 }
