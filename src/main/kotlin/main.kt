@@ -1,6 +1,7 @@
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -72,8 +73,8 @@ fun main() {
                             }
                         }
 
-                        Column {
-                            outputList.value.forEach { item ->
+                        LazyColumn {
+                            items(outputList.value) { item ->
                                 Text(item)
                             }
                         }
