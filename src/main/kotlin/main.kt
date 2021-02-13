@@ -35,56 +35,66 @@ fun main() {
                 )
             }
 
-            if (showDialog) {
-                Dialog(
-                    onDismissRequest = { showDialog = false }
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight(),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
+            MainDialog(
+                shown = showDialog,
+                onDismiss = { showDialog = false }
+            )
+        }
 
-                        Text(
-                            text = "Order of modifiers matters, below clickable is added before and after padding",
-                            style = TextStyle(
-                                color = Color(100, 50, 50),
-                                fontWeight = FontWeight.Bold
-                            ),
-                            modifier = Modifier
-                                .padding(16.dp)
-                        )
+    }
+}
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Text("click me 1", modifier = Modifier
-                                .clickable { }
-                                .padding(30.dp)
-                            )
+@Composable
+@Suppress("FunctionName")
+private fun MainDialog(shown: Boolean, onDismiss: () -> Unit) {
+    if (!shown) return
 
-                            Text("click me 2", modifier = Modifier
-                                .padding(30.dp)
-                                .clickable { }
-                            )
-                        }
+    Dialog(
+        onDismissRequest = { onDismiss() }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
 
-                        Button(
-                            onClick = { showDialog = false },
-                            modifier = Modifier
-                                .fillMaxWidth(0.9f)
-                                .align(Alignment.CenterHorizontally)
-                                .padding(bottom = 8.dp)
-                        ) {
-                            Text("Hide dialog")
-                        }
-                    }
+            Text(
+                text = "Order of modifiers matters, below clickable is added before and after padding",
+                style = TextStyle(
+                    color = Color(100, 50, 50),
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier
+                    .padding(16.dp)
+            )
 
-                }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text("click me 1", modifier = Modifier
+                    .clickable { }
+                    .padding(30.dp)
+                )
+
+                Text("click me 2", modifier = Modifier
+                    .padding(30.dp)
+                    .clickable { }
+                )
+            }
+
+            Button(
+                onClick = { onDismiss() },
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .align(Alignment.CenterHorizontally)
+                    .padding(bottom = 8.dp)
+            ) {
+                Text("Hide dialog")
             }
         }
+
     }
 }
 
