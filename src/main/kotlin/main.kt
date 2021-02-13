@@ -28,31 +28,11 @@ fun main() {
 
         val dependency by inject(Dependency::class.java)
 
-        @Composable
-        @Suppress("FunctionName")
-        fun DialogButton() {
-            Row {
-                Text(
-                    text = "Some label",
-                    modifier = Modifier
-                        .padding(0.dp, 0.dp, 8.dp, 0.dp)
-                        .align(Alignment.CenterVertically),
-                    style = MaterialTheme.typography.caption
-                )
-                Button(
-                    onClick = {
-                        showDialog = true
-                    }) {
-                    Text(
-                        text = "Click here!"
-                    )
-                }
-            }
-        }
-
         MaterialTheme {
             Column {
-                DialogButton()
+                DialogButton(
+                    onClick = { showDialog = true }
+                )
             }
 
             if (showDialog) {
@@ -105,6 +85,27 @@ fun main() {
                 }
             }
         }
+    }
+}
 
+@Composable
+@Suppress("FunctionName")
+fun DialogButton(onClick: () -> Unit) {
+    Row {
+        Text(
+            text = "Some label",
+            modifier = Modifier
+                .padding(0.dp, 0.dp, 8.dp, 0.dp)
+                .align(Alignment.CenterVertically),
+            style = MaterialTheme.typography.caption
+        )
+        Button(
+            onClick = {
+                onClick()
+            }) {
+            Text(
+                text = "Click here!"
+            )
+        }
     }
 }
