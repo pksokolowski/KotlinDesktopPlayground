@@ -11,53 +11,54 @@ import modules.mainModule
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
 
-fun main() = Window {
+fun main() {
     startKoin {
         modules(mainModule)
     }
 
-    var text by remember { mutableStateOf("Hello, World!") }
-    var showDialog by remember { mutableStateOf(false) }
+    Window {
+        var text by remember { mutableStateOf("Hello, World!") }
+        var showDialog by remember { mutableStateOf(false) }
 
-    val dependency by inject(Dependency::class.java)
+        val dependency by inject(Dependency::class.java)
 
-    @Composable
-    @Suppress("FunctionName")
-    fun DialogButton() {
-        Row {
-            Text("Some label")
-            Button({
-                showDialog = true
-            }) {
-                Text("Click here!")
-            }
-        }
-    }
-
-    MaterialTheme {
-
-        Column {
-            DialogButton()
-
-            Button(onClick = {
-                text = dependency.getString()
-            }) {
-                Text(text)
-            }
-
-        }
-
-        if (showDialog) {
-            Dialog({
-                showDialog = false
-            }) {
-                Text("Dialog's content :)")
-                Button({ showDialog = false }) {
-                    Text("Hide dialog")
+        @Composable
+        @Suppress("FunctionName")
+        fun DialogButton() {
+            Row {
+                Text("Some label")
+                Button({
+                    showDialog = true
+                }) {
+                    Text("Click here!")
                 }
             }
         }
+
+        MaterialTheme {
+
+            Column {
+                DialogButton()
+
+                Button(onClick = {
+                    text = dependency.getString()
+                }) {
+                    Text(text)
+                }
+
+            }
+
+            if (showDialog) {
+                Dialog({
+                    showDialog = false
+                }) {
+                    Text("Dialog's content :)")
+                    Button({ showDialog = false }) {
+                        Text("Hide dialog")
+                    }
+                }
+            }
+        }
+
     }
-
 }
-
