@@ -91,21 +91,17 @@ fun main() {
                             )
                         }
 
-                        Column(
+                        Button(
+                            onClick = { showDialog = false },
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxWidth(0.9f)
+                                .align(Alignment.CenterHorizontally)
+                                .padding(bottom = 8.dp)
                         ) {
-                            Button(
-                                onClick = { showDialog = false },
-                                modifier = Modifier
-                                    .fillMaxWidth(0.9f)
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(bottom = 8.dp)
-                            ) {
-                                Text("Hide dialog")
-                            }
+                            Text("Hide dialog")
                         }
                     }
+
                 }
             }
         }
