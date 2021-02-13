@@ -2,6 +2,8 @@ import androidx.compose.desktop.Window
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -30,54 +32,76 @@ fun main() {
         val showDialog = viewModel.showDialog.collectAsState()
 
         MaterialTheme {
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
+            Scaffold(
+                topBar = { AppBar() }
             ) {
-                Column(
-                    verticalArrangement = Arrangement.Top
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 8.dp)
                 ) {
-                    DialogButton(
-                        label = "show dialog button",
-                        onClick = { viewModel.showDialog() }
-                    )
-
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                    Column(
+                        verticalArrangement = Arrangement.Top
                     ) {
-                        EditorView(
-                            text = inputText.value,
-                            onTextChanged = { input ->
-                                viewModel.setInputText(input)
-                            }
+                        DialogButton(
+                            label = "show dialog button",
+                            onClick = { viewModel.showDialog() }
                         )
 
-                        Button(
-                            onClick = {
-                                viewModel.addInputTextToOutputList()
-                            },
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceEvenly,
                             modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(8.dp)
+                                .padding(top = 8.dp)
                         ) {
-                            Text("Add")
+                            EditorView(
+                                text = inputText.value,
+                                onTextChanged = { input ->
+                                    viewModel.setInputText(input)
+                                }
+                            )
+
+                            Button(
+                                onClick = {
+                                    viewModel.addInputTextToOutputList()
+                                },
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(8.dp)
+                            ) {
+                                Text("Add")
+                            }
+                        }
+
+                        Column {
+                            outputList.value.forEach { item ->
+                                Text(item)
+                            }
                         }
                     }
 
-                    Column {
-                        outputList.value.forEach { item ->
-                            Text(item)
-                        }
-                    }
+                    MainDialog(
+                        shown = showDialog.value,
+                        onDismiss = { viewModel.dismissDialog() }
+                    )
                 }
-
-                MainDialog(
-                    shown = showDialog.value,
-                    onDismiss = { viewModel.dismissDialog() }
-                )
             }
         }
     }
+}
+
+@Composable
+@Suppress("FunctionName")
+private fun AppBar() {
+    TopAppBar(
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Default.Home,
+                modifier = Modifier
+                    .padding(start = 12.dp)
+            )
+        },
+        title = { Text("Desktop app") }
+    )
 }
 
 @Composable
