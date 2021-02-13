@@ -7,6 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import feature.dependencies.Dependency
@@ -57,6 +60,16 @@ fun main() {
                             .fillMaxHeight(),
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
+
+                        Text(
+                            text = "Order of modifiers matters, below clickable is added before and after padding",
+                            style = TextStyle(
+                                color = Color(100, 50, 50),
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier
+                                .padding(16.dp)
+                        )
 
                         Row(
                             modifier = Modifier
