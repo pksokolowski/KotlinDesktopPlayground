@@ -36,12 +36,16 @@ fun main() {
                     text = "Some label",
                     modifier = Modifier
                         .padding(0.dp, 0.dp, 8.dp, 0.dp)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.caption
                 )
-                Button({
-                    showDialog = true
-                }) {
-                    Text("Click here!")
+                Button(
+                    onClick = {
+                        showDialog = true
+                    }) {
+                    Text(
+                        text = "Click here!"
+                    )
                 }
             }
         }
