@@ -4,9 +4,11 @@ import features.mainScreen.IMainViewModel
 import features.mainScreen.MainViewModel
 import features.secondScreen.ISecondViewModel
 import features.secondScreen.SecondViewModel
+import navigation.Navigator
 import org.koin.dsl.module
 
 val mainModule = module {
-    factory { MainViewModel() as IMainViewModel }
-    factory { SecondViewModel() as ISecondViewModel }
+    single { Navigator() }
+    factory { MainViewModel(get()) as IMainViewModel }
+    factory { SecondViewModel(get()) as ISecondViewModel }
 }

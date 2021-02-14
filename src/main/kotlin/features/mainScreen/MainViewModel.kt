@@ -1,9 +1,11 @@
 package features.mainScreen
 
+import features.secondScreen.SecondScreen
 import kotlinx.coroutines.flow.MutableStateFlow
+import navigation.Navigator
 import kotlin.properties.Delegates
 
-class MainViewModel : IMainViewModel {
+class MainViewModel(private val navigator: Navigator) : IMainViewModel {
     override val inputText = MutableStateFlow("")
     override val outputList = MutableStateFlow(listOf<String>())
     override val showDialog = MutableStateFlow(false)
@@ -27,5 +29,9 @@ class MainViewModel : IMainViewModel {
 
     override fun dismissDialog() {
         showDialog.value = false
+    }
+
+    override fun gotoSecondScreen() {
+        navigator.navigateTo(SecondScreen())
     }
 }

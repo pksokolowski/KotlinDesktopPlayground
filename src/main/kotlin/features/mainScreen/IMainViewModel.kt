@@ -10,4 +10,5 @@ interface IMainViewModel {
     fun addInputTextToOutputList()
     fun showDialog()
     fun dismissDialog()
+    fun gotoSecondScreen()
 }

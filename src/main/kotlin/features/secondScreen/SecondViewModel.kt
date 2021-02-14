@@ -1,8 +1,9 @@
 package features.secondScreen
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import navigation.Navigator
 
-class SecondViewModel : ISecondViewModel {
+class SecondViewModel(private val navigator: Navigator) : ISecondViewModel {
     override val challengeText = MutableStateFlow("")
     override val inputText = MutableStateFlow("")
 
@@ -14,4 +15,8 @@ class SecondViewModel : ISecondViewModel {
         "State",
         "MainViewModel",
     )
+
+    override fun goBack(){
+        navigator.popBackStack()
+    }
 }
