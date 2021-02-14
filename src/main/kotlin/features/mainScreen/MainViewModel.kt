@@ -32,6 +32,6 @@ class MainViewModel(private val navigator: Navigator) : IMainViewModel {
     }
 
     override fun gotoSecondScreen() {
-        navigator.navigateTo(NavDestination.SecondScreen)
+        navigator.navigateTo(NavDestination.TypingSpeedScreen)
     }
 }

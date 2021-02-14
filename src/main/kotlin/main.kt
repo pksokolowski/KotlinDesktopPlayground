@@ -1,7 +1,7 @@
 import androidx.compose.desktop.Window
 import androidx.compose.runtime.collectAsState
 import features.mainScreen.MainScreen
-import features.secondScreen.SecondScreen
+import features.secondScreen.TypingSpeedScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.mainModule
 import navigation.NavDestination
@@ -32,8 +32,8 @@ fun main() {
             is NavDestination.MainScreen -> {
                 MainScreen()
             }
-            is NavDestination.SecondScreen -> {
-                SecondScreen()
+            is NavDestination.TypingSpeedScreen -> {
+                TypingSpeedScreen()
             }
             null -> {
                 null

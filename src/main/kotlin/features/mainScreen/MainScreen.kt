@@ -52,7 +52,7 @@ class MainScreen : Screen {
                             modifier = Modifier
                                 .padding(8.dp)
                         ) {
-                            Text("Open second screen")
+                            Text("Open typing speed screen")
                         }
 
                         DialogButton(
