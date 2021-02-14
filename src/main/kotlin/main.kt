@@ -19,7 +19,7 @@ fun main() {
     val navigator by inject(Navigator::class.java)
     navigator.navigateTo(NavDestination.MainScreen)
 
-    val backStack = ScreenBackStack()
+    val backStack by inject(ScreenBackStack::class.java)
 
     Window {
         val navDestinationState = navigator.currentScreen.collectAsState()
