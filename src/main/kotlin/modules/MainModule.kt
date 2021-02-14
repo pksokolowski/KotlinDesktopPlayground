@@ -1,7 +1,7 @@
 package modules
 
-import IMainViewModel
-import MainViewModel
+import features.mainScreen.IMainViewModel
+import features.mainScreen.MainViewModel
 import org.koin.dsl.module
 
 val mainModule = module {

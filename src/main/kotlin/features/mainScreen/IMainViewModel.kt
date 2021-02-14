@@ -1,3 +1,5 @@
+package features.mainScreen
+
 import kotlinx.coroutines.flow.StateFlow
 
 interface IMainViewModel {
