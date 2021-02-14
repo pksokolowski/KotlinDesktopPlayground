@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,7 @@ fun main() {
 
         MaterialTheme {
             Scaffold(
-                topBar = { AppBar() }
+                topBar = { AppBar(Icons.Default.Home) }
             ) {
                 Surface(
                     modifier = Modifier
@@ -92,13 +93,14 @@ fun main() {
 
 @Composable
 @Suppress("FunctionName")
-private fun AppBar() {
+private fun AppBar(icon: ImageVector, onIconClick: (() -> Unit)? = null) {
     TopAppBar(
         navigationIcon = {
             Icon(
-                imageVector = Icons.Default.Home,
+                imageVector = icon,
                 modifier = Modifier
-                    .padding(start = 12.dp)
+                    .clickable { onIconClick?.invoke() }
+                    .padding(12.dp)
             )
         },
         title = { Text("Desktop app") }
