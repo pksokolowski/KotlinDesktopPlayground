@@ -1,6 +1,7 @@
 package features.secondScreen
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import navigation.NavDestination
 import navigation.Navigator
 
 class SecondViewModel(private val navigator: Navigator) : ISecondViewModel {
@@ -16,7 +17,7 @@ class SecondViewModel(private val navigator: Navigator) : ISecondViewModel {
         "MainViewModel",
     )
 
-    override fun goBack(){
-        navigator.popBackStack()
+    override fun goBack() {
+        navigator.navigateTo(NavDestination.Previous)
     }
 }

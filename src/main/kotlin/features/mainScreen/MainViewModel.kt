@@ -1,7 +1,7 @@
 package features.mainScreen
 
-import features.secondScreen.SecondScreen
 import kotlinx.coroutines.flow.MutableStateFlow
+import navigation.NavDestination
 import navigation.Navigator
 import kotlin.properties.Delegates
 
@@ -32,6 +32,6 @@ class MainViewModel(private val navigator: Navigator) : IMainViewModel {
     }
 
     override fun gotoSecondScreen() {
-        navigator.navigateTo(SecondScreen())
+        navigator.navigateTo(NavDestination.SecondScreen)
     }
 }

@@ -4,18 +4,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class Navigator {
-    private val backStack = mutableListOf<Screen>()
-    private val _currentScreen = MutableStateFlow<Screen?>(null)
+    private val _currentScreen = MutableStateFlow<NavDestination?>(null)
     val currentScreen = _currentScreen.asStateFlow()
 
-    fun navigateTo(destination: Screen, addToBackStack: Boolean = true) {
+    fun navigateTo(destination: NavDestination) {
         _currentScreen.value = destination
-        if (addToBackStack) backStack += destination
-    }
-
-    fun popBackStack() {
-        backStack.removeLastOrNull() ?: return
-        val elementToShow = backStack.lastOrNull() ?: return
-        navigateTo(elementToShow, false)
     }
 }
