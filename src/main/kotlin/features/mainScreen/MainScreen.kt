@@ -154,7 +154,7 @@ private fun MainDialog(shown: Boolean, onDismiss: () -> Unit) {
 
 @Composable
 @Suppress("FunctionName")
-fun DialogButton(label: String, onClick: () -> Unit) {
+private fun DialogButton(label: String, onClick: () -> Unit) {
     Row {
         Text(
             text = label,
