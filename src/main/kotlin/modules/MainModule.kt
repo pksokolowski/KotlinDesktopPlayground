@@ -2,8 +2,8 @@ package modules
 
 import features.mainScreen.IMainViewModel
 import features.mainScreen.MainViewModel
-import features.secondScreen.ITypingSpeedViewModel
-import features.secondScreen.TypingSpeedViewModel
+import features.typingSpeed.ITypingSpeedViewModel
+import features.typingSpeed.TypingSpeedViewModel
 import navigation.Navigator
 import navigation.ScreenBackStack
 import org.koin.dsl.module

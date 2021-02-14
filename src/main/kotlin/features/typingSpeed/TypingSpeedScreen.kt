@@ -1,4 +1,4 @@
-package features.secondScreen
+package features.typingSpeed
 
 import MainAppBar
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +35,7 @@ class TypingSpeedScreen : Screen {
                 topBar = {
                     MainAppBar(
                         icon = Icons.Default.ArrowBack,
+                        title = "Typing speed",
                         onIconClick = { viewModel.goBack() }
                     )
                 }

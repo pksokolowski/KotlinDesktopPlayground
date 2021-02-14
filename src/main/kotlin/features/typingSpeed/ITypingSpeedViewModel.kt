@@ -1,4 +1,4 @@
-package features.secondScreen
+package features.typingSpeed
 
 import kotlinx.coroutines.flow.StateFlow
 

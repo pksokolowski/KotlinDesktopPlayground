@@ -35,7 +35,8 @@ class MainScreen : Screen {
             Scaffold(
                 topBar = {
                     MainAppBar(
-                        icon = Icons.Default.Home
+                        icon = Icons.Default.Home,
+                        title = "Desktop App"
                     )
                 }
             ) {

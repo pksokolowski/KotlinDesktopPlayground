@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 @Suppress("FunctionName")
-fun MainAppBar(icon: ImageVector, onIconClick: (() -> Unit)? = null) {
+fun MainAppBar(icon: ImageVector, title: String, onIconClick: (() -> Unit)? = null) {
     TopAppBar(
         navigationIcon = {
             Icon(
@@ -20,6 +20,6 @@ fun MainAppBar(icon: ImageVector, onIconClick: (() -> Unit)? = null) {
                     .padding(12.dp)
             )
         },
-        title = { Text("Desktop app") }
+        title = { Text(title) }
     )
 }
