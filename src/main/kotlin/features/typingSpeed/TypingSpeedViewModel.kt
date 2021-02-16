@@ -3,20 +3,11 @@ package features.typingSpeed
 import kotlinx.coroutines.flow.MutableStateFlow
 import navigation.NavDestination
 import navigation.Navigator
-import kotlin.properties.Delegates
 
 class TypingSpeedViewModel(private val navigator: Navigator) : ITypingSpeedViewModel {
     override val challengeText = MutableStateFlow("")
     override val inputText = MutableStateFlow("")
     override val lastTypingSpeed = MutableStateFlow<Long?>(null)
-
-    private var inputTextSource by Delegates.observable("") { _, _, new ->
-        inputText.value = new
-    }
-
-    private var challengeTextSource by Delegates.observable("") { _, _, new ->
-        challengeText.value = new
-    }
 
     private val words = listOf(
         "String",
@@ -34,17 +25,17 @@ class TypingSpeedViewModel(private val navigator: Navigator) : ITypingSpeedViewM
     }
 
     private fun newChallenge() {
-        challengeTextSource = words.random()
+        challengeText.value = words.random()
     }
 
     override fun setInputText(text: String) {
-        if (text == challengeTextSource) {
+        if (text == challengeText.value) {
             showChallengeResults(text)
             inputText.value = ""
             newChallenge()
             return
         }
-        if (inputTextSource.isEmpty() && text.length == 1) {
+        if (inputText.value.isEmpty() && text.length == 1) {
             lastTypingSpeed.value = null
             lastChallengeStart = System.currentTimeMillis()
         }
