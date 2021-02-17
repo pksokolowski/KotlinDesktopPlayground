@@ -1,4 +1,4 @@
-package features.mainScreen
+package features.mainScreen.presentation
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import navigation.NavDestination

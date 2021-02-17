@@ -1,4 +1,4 @@
-package features.mainScreen
+package features.mainScreen.presentation
 
 import MainAppBar
 import androidx.compose.foundation.clickable

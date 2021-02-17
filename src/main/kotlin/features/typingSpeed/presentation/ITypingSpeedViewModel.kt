@@ -1,4 +1,4 @@
-package features.typingSpeed
+package features.typingSpeed.presentation
 
 import kotlinx.coroutines.flow.StateFlow
 
@@ -8,4 +8,5 @@ interface ITypingSpeedViewModel {
     val lastTypingSpeed: StateFlow<Long?>
     fun goBack()
     fun setInputText(text: String)
+    fun saveWord()
 }

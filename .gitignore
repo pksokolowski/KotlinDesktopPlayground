@@ -8,3 +8,4 @@ gradle/
 *.log
 gradlew
 gradlew.bat
+/data.db

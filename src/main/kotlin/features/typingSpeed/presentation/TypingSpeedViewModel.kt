@@ -1,27 +1,38 @@
-package features.typingSpeed
+package features.typingSpeed.presentation
 
+import features.typingSpeed.`use-cases`.GetTypingSpeedVocabularyUseCase
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import navigation.NavDestination
 import navigation.Navigator
 
-class TypingSpeedViewModel(private val navigator: Navigator) : ITypingSpeedViewModel {
+class TypingSpeedViewModel(
+    private val navigator: Navigator,
+    private val getTypingSpeedVocabularyUseCase: GetTypingSpeedVocabularyUseCase,
+) : ITypingSpeedViewModel {
+    private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
     override val challengeText = MutableStateFlow("")
     override val inputText = MutableStateFlow("")
     override val lastTypingSpeed = MutableStateFlow<Long?>(null)
 
-    private val words = listOf(
-        "String",
-        "MutableStateFlow",
-        "MutableLiveData",
-        "Provider",
-        "State",
-        "MainViewModel",
-    )
+    private var words = listOf<String>()
 
     private var lastChallengeStart: Long? = null
 
     init {
-        newChallenge()
+        coroutineScope.launch {
+            getTypingSpeedVocabularyUseCase.getVocabulary()
+                .collect { vocabulary ->
+                    val wasBlankBefore = words.isEmpty()
+                    words = vocabulary
+                    if (wasBlankBefore && words.isNotEmpty()) {
+                        newChallenge()
+                    }
+                }
+        }
     }
 
     private fun newChallenge() {
@@ -42,6 +53,14 @@ class TypingSpeedViewModel(private val navigator: Navigator) : ITypingSpeedViewM
         inputText.value = text
     }
 
+    override fun saveWord() {
+        val word = inputText.value
+        coroutineScope.launch {
+            getTypingSpeedVocabularyUseCase.saveWord(word)
+        }
+        inputText.value = ""
+    }
+
     private fun showChallengeResults(text: String) {
         val now = System.currentTimeMillis()
         lastChallengeStart?.let { start ->
@@ -53,6 +72,7 @@ class TypingSpeedViewModel(private val navigator: Navigator) : ITypingSpeedViewM
     }
 
     override fun goBack() {
+        coroutineScope.coroutineContext.cancelChildren()
         navigator.navigateTo(NavDestination.Previous)
     }
 }

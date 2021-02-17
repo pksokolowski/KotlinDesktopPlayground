@@ -24,6 +24,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
     implementation("org.koin:koin-core:$koinVersion")
+    implementation("org.jetbrains.exposed", "exposed-core", "0.29.1")
+    implementation("org.jetbrains.exposed", "exposed-dao", "0.29.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.29.1")
+    implementation("org.xerial", "sqlite-jdbc", "3.34.0")
 }
 
 tasks.withType<KotlinCompile>() {

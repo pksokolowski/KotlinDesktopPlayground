@@ -1,10 +1,7 @@
-package features.typingSpeed
+package features.typingSpeed.presentation
 
 import MainAppBar
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -54,12 +51,21 @@ class TypingSpeedScreen : Screen {
                         Text(
                             text = challengeText.value
                         )
-                        TextField(
-                            value = inputText.value,
-                            onValueChange = { newValue ->
-                                viewModel.setInputText(newValue)
+                        Row {
+                            TextField(
+                                value = inputText.value,
+                                onValueChange = { newValue ->
+                                    viewModel.setInputText(newValue)
+                                }
+                            )
+                            Button(
+                                onClick = {
+                                    viewModel.saveWord()
+                                }
+                            ) {
+                                Text("Save")
                             }
-                        )
+                        }
                         lastTypingSpeed.value?.let { speed ->
                             Providers(AmbientContentAlpha provides ContentAlpha.medium) {
                                 Text("$speed ms per character")

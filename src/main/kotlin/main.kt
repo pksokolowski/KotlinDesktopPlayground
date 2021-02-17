@@ -1,7 +1,7 @@
 import androidx.compose.desktop.Window
 import androidx.compose.runtime.collectAsState
-import features.mainScreen.MainScreen
-import features.typingSpeed.TypingSpeedScreen
+import features.mainScreen.presentation.MainScreen
+import features.typingSpeed.presentation.TypingSpeedScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.mainModule
 import navigation.NavDestination
