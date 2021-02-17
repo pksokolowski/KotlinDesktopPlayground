@@ -4,7 +4,6 @@ import features.typingSpeed.`use-cases`.GetTypingSpeedVocabularyUseCase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import navigation.NavDestination
 import navigation.Navigator
 
@@ -14,7 +13,7 @@ class TypingSpeedViewModel(
 ) : ITypingSpeedViewModel {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    override val challengeText = MutableStateFlow("")
+    override val challengeText = MutableStateFlow<String?>(null)
     override val inputText = MutableStateFlow("")
     override val lastTypingSpeed = MutableStateFlow<Long?>(null)
 
@@ -36,7 +35,7 @@ class TypingSpeedViewModel(
     }
 
     private fun newChallenge() {
-        challengeText.value = words.random()
+        challengeText.value = if (words.isNotEmpty()) words.random() else null
     }
 
     override fun setInputText(text: String) {

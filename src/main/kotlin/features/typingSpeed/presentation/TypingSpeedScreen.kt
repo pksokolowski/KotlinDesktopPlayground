@@ -11,6 +11,7 @@ import androidx.compose.runtime.Providers
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import navigation.Screen
@@ -49,7 +50,7 @@ class TypingSpeedScreen : Screen {
                             .padding(8.dp)
                     ) {
                         Text(
-                            text = challengeText.value
+                            text = challengeText.value ?: ""
                         )
                         Row {
                             TextField(
@@ -61,15 +62,19 @@ class TypingSpeedScreen : Screen {
                             Button(
                                 onClick = {
                                     viewModel.saveWord()
-                                }
+                                },
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(8.dp)
                             ) {
                                 Text("Save")
                             }
                         }
-                        lastTypingSpeed.value?.let { speed ->
-                            Providers(AmbientContentAlpha provides ContentAlpha.medium) {
-                                Text("$speed ms per character")
-                            }
+                        Providers(AmbientContentAlpha provides ContentAlpha.medium) {
+                            val speed = lastTypingSpeed.value?.let {
+                                "$it ms per character"
+                            } ?: ""
+                            Text(speed)
                         }
                     }
                 }
