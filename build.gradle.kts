@@ -28,6 +28,12 @@ dependencies {
     implementation("org.jetbrains.exposed", "exposed-dao", "0.29.1")
     implementation("org.jetbrains.exposed", "exposed-jdbc", "0.29.1")
     implementation("org.xerial", "sqlite-jdbc", "3.34.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    testImplementation("junit:junit:4.12")
+    testImplementation("org.mockito:mockito-core:2.19.0")
 }
 
 tasks.withType<KotlinCompile>() {

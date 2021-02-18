@@ -1,6 +1,6 @@
 package features.typingSpeed.presentation
 
-import features.typingSpeed.`use-cases`.GetTypingSpeedVocabularyUseCase
+import features.typingSpeed.use_cases.GetTypingSpeedVocabularyUseCase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect

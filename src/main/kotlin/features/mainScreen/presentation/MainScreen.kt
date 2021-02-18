@@ -49,11 +49,19 @@ class MainScreen : Screen {
                         verticalArrangement = Arrangement.Top
                     ) {
                         Button(
-                            onClick = { viewModel.gotoSecondScreen() },
+                            onClick = { viewModel.gotoTypingSpeedScreen() },
                             modifier = Modifier
                                 .padding(8.dp)
                         ) {
                             Text("Open typing speed screen")
+                        }
+
+                        Button(
+                            onClick = { viewModel.gotoCountriesScreen() },
+                            modifier = Modifier
+                                .padding(8.dp)
+                        ) {
+                            Text("Open countries info screen (retrofit)")
                         }
 
                         DialogButton(

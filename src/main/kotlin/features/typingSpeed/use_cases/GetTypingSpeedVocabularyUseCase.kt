@@ -1,4 +1,4 @@
-package features.typingSpeed.`use-cases`
+package features.typingSpeed.use_cases
 
 import features.typingSpeed.repository.WordsRepository
 import kotlinx.coroutines.Dispatchers

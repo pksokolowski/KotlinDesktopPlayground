@@ -1,9 +1,11 @@
 import androidx.compose.desktop.Window
 import androidx.compose.runtime.collectAsState
+import features.countries.presentation.CountriesScreen
 import features.mainScreen.presentation.MainScreen
 import features.typingSpeed.presentation.TypingSpeedScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.mainModule
+import modules.networkModule
 import navigation.NavDestination
 import navigation.Navigator
 import navigation.ScreenBackStack
@@ -14,6 +16,7 @@ import org.koin.java.KoinJavaComponent.inject
 fun main() {
     startKoin {
         modules(mainModule)
+        modules(networkModule)
     }
 
     val navigator by inject(Navigator::class.java)
@@ -34,6 +37,9 @@ fun main() {
             }
             is NavDestination.TypingSpeedScreen -> {
                 TypingSpeedScreen()
+            }
+            is NavDestination.CountriesScreen -> {
+                CountriesScreen()
             }
             null -> {
                 null

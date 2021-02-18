@@ -26,7 +26,11 @@ class MainViewModel(private val navigator: Navigator) : IMainViewModel {
         showDialog.value = false
     }
 
-    override fun gotoSecondScreen() {
+    override fun gotoTypingSpeedScreen() {
         navigator.navigateTo(NavDestination.TypingSpeedScreen)
+    }
+
+    override fun gotoCountriesScreen() {
+        navigator.navigateTo(NavDestination.CountriesScreen)
     }
 }
