@@ -12,16 +12,19 @@ class CountriesViewModel(
     private val getCountryInfoUseCase: GetCountryInfoGivenISO2CountryCodeUseCase
 ) : ICountriesViewModel {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val countryNameMatcher = Regex("[a-zA-Z]{0,2}")
 
     override val countryCodeInputText = MutableStateFlow("")
     override val countryInfo = MutableStateFlow<CountryInfo?>(null)
 
     override fun setCountryCodeInput(code: String) {
-        if (code.isNotEmpty() && code.last() == '\n') {
-            fetchCountryDataForCode()
-            return
-        }
+        if (!code.matches(countryNameMatcher)) return
+
         countryCodeInputText.value = code
+
+        if (code.length == 2) {
+            fetchCountryDataForCode()
+        }
     }
 
     override fun goBack() {

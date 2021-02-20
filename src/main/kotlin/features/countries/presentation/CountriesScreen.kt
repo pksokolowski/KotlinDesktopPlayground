@@ -44,16 +44,20 @@ class CountriesScreen : Screen {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        countryInfo.value?.let { country ->
-                            Text("name: ${country.name}")
+                        countryInfo.value.let { country ->
+                            if (country != null) {
+                                Text("name: ${country.name}")
+                            } else {
+                                Text("try \"pl\", \"gb\", \"de\"")
+                            }
                         }
-
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            TextField(
+                            OutlinedTextField(
                                 value = countryCodeInput.value,
+                                label = { Text("ISO-2 country code") },
                                 onValueChange = { newText ->
                                     viewModel.setCountryCodeInput(newText)
                                 }
