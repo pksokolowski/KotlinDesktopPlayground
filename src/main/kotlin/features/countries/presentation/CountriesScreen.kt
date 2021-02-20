@@ -28,6 +28,7 @@ class CountriesScreen : Screen {
         MaterialTheme {
             val countryCodeInput = viewModel.countryCodeInputText.collectAsState()
             val countryInfo = viewModel.countryInfo.collectAsState()
+            val isLoading = viewModel.isLoading.collectAsState()
 
             Scaffold(
                 topBar = {
@@ -69,7 +70,11 @@ class CountriesScreen : Screen {
                                     }
                                 }
                             } else {
-                                Text("try \"pl\", \"gb\", \"de\"")
+                                if (isLoading.value) {
+                                    CircularProgressIndicator()
+                                } else {
+                                    Text("try \"pl\", \"gb\", \"de\"")
+                                }
                             }
                         }
                         Row(
