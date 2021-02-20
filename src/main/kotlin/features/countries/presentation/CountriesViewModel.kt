@@ -18,11 +18,12 @@ class CountriesViewModel(
     override val countryCodeInputText = MutableStateFlow("")
     override val countryInfo = MutableStateFlow<CountryInfo?>(null)
     override val isLoading = MutableStateFlow(false)
-    override val error = MutableSharedFlow<Error?>()
+    override val error = MutableStateFlow<Error?>(null)
 
     override fun setCountryCodeInput(code: String) {
         if (!code.matches(countryCodeMatcher)) return
 
+        error.value = null
         countryCodeInputText.value = code
 
         if (code.length == 2) {
@@ -44,7 +45,7 @@ class CountriesViewModel(
                 isLoading.value = true
                 getCountryInfoUseCase.getInfo(countryCode)
             } catch (e: Exception) {
-                error.emit(Error.FailedToObtainCountryData)
+                error.value = Error.FailedToObtainCountryData
                 null
             } finally {
                 isLoading.value = false

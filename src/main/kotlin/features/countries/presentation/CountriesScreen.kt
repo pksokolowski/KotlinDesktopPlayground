@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import navigation.Screen
@@ -29,6 +28,7 @@ class CountriesScreen : Screen {
             val countryCodeInput = viewModel.countryCodeInputText.collectAsState()
             val countryInfo = viewModel.countryInfo.collectAsState()
             val isLoading = viewModel.isLoading.collectAsState()
+            val error = viewModel.error.collectAsState()
 
             Scaffold(
                 topBar = {
@@ -70,11 +70,24 @@ class CountriesScreen : Screen {
                                     }
                                 }
                             } else {
-                                if (isLoading.value) {
-                                    CircularProgressIndicator()
-                                } else {
-                                    Text("try \"pl\", \"gb\", \"de\"")
+                                when {
+                                    isLoading.value -> {
+                                        CircularProgressIndicator()
+                                    }
+                                    error.value != null -> {
+                                        Text(
+                                            text = "error",
+                                            style = TextStyle(
+                                                color = Color.Red,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        )
+                                    }
+                                    else -> {
+                                        Text("try \"pl\", \"gb\", \"de\"")
+                                    }
                                 }
+
                             }
                         }
                         Row(

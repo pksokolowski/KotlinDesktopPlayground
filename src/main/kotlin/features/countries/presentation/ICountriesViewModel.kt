@@ -1,14 +1,13 @@
 package features.countries.presentation
 
 import features.countries.model.CountryInfo
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 interface ICountriesViewModel {
-    val countryCodeInputText: MutableStateFlow<String>
-    val countryInfo: MutableStateFlow<CountryInfo?>
-    val isLoading: MutableStateFlow<Boolean>
-    val error: MutableSharedFlow<CountriesViewModel.Error?>
+    val countryCodeInputText: StateFlow<String>
+    val countryInfo: StateFlow<CountryInfo?>
+    val isLoading: StateFlow<Boolean>
+    val error: StateFlow<CountriesViewModel.Error?>
     fun goBack()
     fun setCountryCodeInput(code: String)
 }
