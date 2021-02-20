@@ -24,6 +24,8 @@ class CountriesViewModel(
 
         if (code.length == 2) {
             fetchCountryDataForCode()
+        } else {
+            countryInfo.value = null
         }
     }
 
