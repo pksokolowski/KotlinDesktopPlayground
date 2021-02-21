@@ -3,7 +3,7 @@ package modules
 import com.google.gson.Gson
 import features.countries.api.CountriesService
 import features.countries.api.WorldBankApiParser
-import features.countries.use_cases.GetCountryInfoGivenISO2CountryCodeUseCase
+import features.countries.use_cases.GetCountryInfoGivenCountryCodeUseCase
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,5 +24,5 @@ val networkModule = module {
 
     factory { WorldBankApiParser(get()) }
 
-    factory { GetCountryInfoGivenISO2CountryCodeUseCase(get(), get()) }
+    factory { GetCountryInfoGivenCountryCodeUseCase(get(), get()) }
 }

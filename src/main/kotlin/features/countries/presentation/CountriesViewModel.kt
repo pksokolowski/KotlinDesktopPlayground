@@ -1,16 +1,15 @@
 package features.countries.presentation
 
-import features.countries.use_cases.GetCountryInfoGivenISO2CountryCodeUseCase
+import features.countries.use_cases.GetCountryInfoGivenCountryCodeUseCase
 import features.countries.model.CountryInfo
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import navigation.NavDestination
 import navigation.Navigator
 
 class CountriesViewModel(
     private val navigator: Navigator,
-    private val getCountryInfoUseCase: GetCountryInfoGivenISO2CountryCodeUseCase
+    private val getCountryInfoUseCase: GetCountryInfoGivenCountryCodeUseCase
 ) : ICountriesViewModel {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val countryCodeMatcher = Regex("[a-zA-Z]{0,2}")
