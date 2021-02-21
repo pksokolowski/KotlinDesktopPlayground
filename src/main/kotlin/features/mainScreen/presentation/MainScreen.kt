@@ -3,7 +3,6 @@ package features.mainScreen.presentation
 import MainAppBar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -27,8 +26,6 @@ class MainScreen : Screen {
     @Suppress("FunctionName")
     @ExperimentalCoroutinesApi
     override fun render() {
-        val inputText = viewModel.inputText.collectAsState()
-        val outputList = viewModel.outputList.collectAsState()
         val showDialog = viewModel.showDialog.collectAsState()
 
         MaterialTheme {
@@ -36,78 +33,63 @@ class MainScreen : Screen {
                 topBar = {
                     MainAppBar(
                         icon = Icons.Default.Home,
-                        title = "Desktop App"
+                        title = "Kotlin Desktop Playground"
                     )
                 }
             ) {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 8.dp)
+                        .padding(8.dp)
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.Top
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
                     ) {
-                        Button(
-                            onClick = { viewModel.gotoTypingSpeedScreen() },
+                        Surface(
                             modifier = Modifier
-                                .padding(8.dp)
+                                .fillMaxWidth(0.5f)
                         ) {
-                            Text("Open typing speed screen")
-                        }
-
-                        Button(
-                            onClick = { viewModel.gotoCountriesScreen() },
-                            modifier = Modifier
-                                .padding(8.dp)
-                        ) {
-                            Text("Open countries info screen (retrofit)")
-                        }
-
-                        Button(
-                            onClick = { viewModel.gotoListsScreen() },
-                            modifier = Modifier
-                                .padding(8.dp)
-                        ) {
-                            Text("Lists samples")
-                        }
-
-                        DialogButton(
-                            label = "show dialog button",
-                            onClick = { viewModel.showDialog() }
-                        )
-
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                        ) {
-                            EditorView(
-                                text = inputText.value,
-                                onTextChanged = { input ->
-                                    viewModel.setInputText(input)
-                                }
-                            )
-
-                            Button(
-                                onClick = {
-                                    viewModel.addInputTextToOutputList()
+                            listOf(
+                                "Persistence - typing speed" to {
+                                    viewModel.gotoTypingSpeedScreen()
                                 },
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(8.dp)
-                            ) {
-                                Text("Add")
-                            }
+                                "Retrofit - countries" to {
+                                    viewModel.gotoCountriesScreen()
+                                },
+                                "Recycler-view-like list" to {
+                                    viewModel.gotoListsScreen()
+                                },
+                                "A dialog" to {
+                                    viewModel.showDialog()
+                                },
+                            )
+                                .sortedBy { it.first.length }
+                                .let {
+                                    ButtonRows(it)
+                                }
                         }
 
-                        LazyColumn {
-                            items(outputList.value) { item ->
-                                Text(item)
-                            }
+                        Column(
+                            verticalArrangement = Arrangement.Top
+                        ) {
+                            Text(
+                                text = """
+                                    This is a playground app for Kotlin Desktop
+                                    
+                                    It is meant for exploration and learning of the technology and 
+                                    finding what is possible with it. On the left hand side, there
+                                    is a list of buttons which you can use to traverse the supported
+                                    features.
+                                    
+                                    Have fun.
+                                """.trimIndent(),
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier
+                                    .padding(start = 8.dp, end = 8.dp)
+                            )
                         }
                     }
-
                     MainDialog(
                         shown = showDialog.value,
                         onDismiss = { viewModel.dismissDialog() }
@@ -119,13 +101,22 @@ class MainScreen : Screen {
 
     @Composable
     @Suppress("FunctionName")
-    private fun EditorView(text: String, onTextChanged: (String) -> Unit) {
-        TextField(
-            value = text,
-            onValueChange = { newText ->
-                onTextChanged(newText)
+    private fun ButtonRows(
+        titleActionRows: List<Pair<String, () -> Unit>>
+    ) {
+        Column {
+            titleActionRows.forEach { rowData ->
+                val (title, action) = rowData
+                Button(
+                    onClick = { action() },
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(title)
+                }
             }
-        )
+        }
     }
 
     @Composable
@@ -179,28 +170,6 @@ class MainScreen : Screen {
                 }
             }
 
-        }
-    }
-
-    @Composable
-    @Suppress("FunctionName")
-    private fun DialogButton(label: String, onClick: () -> Unit) {
-        Row {
-            Text(
-                text = label,
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 8.dp, 0.dp)
-                    .align(Alignment.CenterVertically),
-                style = MaterialTheme.typography.caption
-            )
-            Button(
-                onClick = {
-                    onClick()
-                }) {
-                Text(
-                    text = "Click here!"
-                )
-            }
         }
     }
 }
