@@ -64,6 +64,14 @@ class MainScreen : Screen {
                             Text("Open countries info screen (retrofit)")
                         }
 
+                        Button(
+                            onClick = { viewModel.gotoListsScreen() },
+                            modifier = Modifier
+                                .padding(8.dp)
+                        ) {
+                            Text("Lists samples")
+                        }
+
                         DialogButton(
                             label = "show dialog button",
                             onClick = { viewModel.showDialog() }

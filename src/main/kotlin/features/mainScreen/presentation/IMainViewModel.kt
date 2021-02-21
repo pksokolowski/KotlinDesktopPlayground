@@ -12,4 +12,5 @@ interface IMainViewModel {
     fun dismissDialog()
     fun gotoTypingSpeedScreen()
     fun gotoCountriesScreen()
+    fun gotoListsScreen()
 }

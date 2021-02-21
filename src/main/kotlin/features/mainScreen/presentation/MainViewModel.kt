@@ -33,4 +33,8 @@ class MainViewModel(private val navigator: Navigator) : IMainViewModel {
     override fun gotoCountriesScreen() {
         navigator.navigateTo(NavDestination.CountriesScreen)
     }
+
+    override fun gotoListsScreen() {
+        navigator.navigateTo(NavDestination.ListsScreen)
+    }
 }

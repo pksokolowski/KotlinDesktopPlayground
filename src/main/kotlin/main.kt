@@ -1,6 +1,7 @@
 import androidx.compose.desktop.Window
 import androidx.compose.runtime.collectAsState
 import features.countries.presentation.CountriesScreen
+import features.lists.ListsScreen
 import features.mainScreen.presentation.MainScreen
 import features.typingSpeed.presentation.TypingSpeedScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,6 +41,9 @@ fun main() {
             }
             is NavDestination.CountriesScreen -> {
                 CountriesScreen()
+            }
+            is NavDestination.ListsScreen -> {
+                ListsScreen()
             }
             null -> {
                 null

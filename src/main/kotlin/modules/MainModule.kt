@@ -2,6 +2,8 @@ package modules
 
 import features.countries.presentation.CountriesViewModel
 import features.countries.presentation.ICountriesViewModel
+import features.lists.IListsViewModel
+import features.lists.ListsViewModel
 import features.mainScreen.presentation.IMainViewModel
 import features.mainScreen.presentation.MainViewModel
 import features.typingSpeed.db.WordsDatabase
@@ -24,4 +26,6 @@ val mainModule = module {
     factory { GetTypingSpeedVocabularyUseCase(get()) }
 
     factory { CountriesViewModel(get(), get()) as ICountriesViewModel }
+
+    factory { ListsViewModel(get()) as IListsViewModel }
 }
