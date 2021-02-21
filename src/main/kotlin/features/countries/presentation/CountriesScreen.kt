@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import features.countries.model.CountryInfo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import navigation.Screen
 import org.koin.java.KoinJavaComponent
@@ -30,84 +31,128 @@ class CountriesScreen : Screen {
             val isLoading = viewModel.isLoading.collectAsState()
             val error = viewModel.error.collectAsState()
 
-            Scaffold(
-                topBar = {
-                    MainAppBar(
-                        icon = Icons.Default.ArrowBack,
-                        title = "Countries",
-                        onIconClick = { viewModel.goBack() }
-                    )
-                }
+            CountriesScreenFrame(
+                onBackPress = { viewModel.goBack() }
             ) {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 8.dp)
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        countryInfo.value.let { country ->
-                            if (country != null) {
-                                listOf(
-                                    "name" to country.name,
-                                    "capitol city" to country.capitalCity,
-                                    "income level" to country.incomeLevel
-                                ).forEach { rowData ->
-                                    val (title, value) = rowData
-                                    Row {
-                                        Text(title)
-                                        Text(
-                                            text = value,
-                                            style = TextStyle(
-                                                color = Color(100, 50, 50),
-                                                fontWeight = FontWeight.Bold
-                                            ),
-                                            modifier = Modifier
-                                                .padding(start = 8.dp)
-                                        )
-                                    }
-                                }
-                            } else {
-                                when {
-                                    isLoading.value -> {
-                                        CircularProgressIndicator()
-                                    }
-                                    error.value != null -> {
-                                        Text(
-                                            text = "error",
-                                            style = TextStyle(
-                                                color = Color.Red,
-                                                fontWeight = FontWeight.Bold
-                                            )
-                                        )
-                                    }
-                                    else -> {
-                                        Text("try \"pl\", \"gb\", \"de\"")
-                                    }
-                                }
 
-                            }
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            OutlinedTextField(
-                                value = countryCodeInput.value,
-                                label = { Text("ISO 3166-1 alpha-2 country code") },
-                                onValueChange = { newText ->
-                                    viewModel.setCountryCodeInput(newText)
-                                },
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                            )
-                        }
+                    CountryData(
+                        countryInfo.value,
+                        isLoading.value,
+                        error.value
+                    )
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CountryCodeInput(countryCodeInput.value)
                     }
                 }
             }
         }
-
     }
+
+    @Composable
+    @Suppress("FunctionName")
+    private fun CountryCodeInput(countryCodeInput: String) {
+        OutlinedTextField(
+            value = countryCodeInput,
+            label = { Text("ISO 3166-1 alpha-2 country code") },
+            onValueChange = { newText ->
+                viewModel.setCountryCodeInput(newText)
+            },
+            modifier = Modifier
+                .padding(top = 8.dp)
+        )
+    }
+
+    @Composable
+    @Suppress("FunctionName")
+    private fun CountryData(
+        countryInfo: CountryInfo?,
+        isLoading: Boolean,
+        error: CountriesViewModel.Error?
+    ) {
+        countryInfo.let { country ->
+            if (country != null) {
+                listOf(
+                    "name" to country.name,
+                    "capitol city" to country.capitalCity,
+                    "income level" to country.incomeLevel
+                ).let { rowsData ->
+                    InfoRows(rowsData)
+                }
+            } else {
+                when {
+                    isLoading -> {
+                        CircularProgressIndicator()
+                    }
+                    error != null -> {
+                        Text(
+                            text = "error",
+                            style = TextStyle(
+                                color = Color.Red,
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                    }
+                    else -> {
+                        Text("try \"pl\", \"gb\", \"de\"")
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    @Suppress("FunctionName")
+    private fun CountriesScreenFrame(
+        onBackPress: () -> Unit,
+        content: @Composable () -> Unit
+    ) {
+        Scaffold(
+            topBar = {
+                MainAppBar(
+                    icon = Icons.Default.ArrowBack,
+                    title = "Countries",
+                    onIconClick = { onBackPress() }
+                )
+            }
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 8.dp)
+            ) {
+                content()
+            }
+        }
+    }
+
+    @Composable
+    @Suppress("FunctionName")
+    private fun InfoRows(
+        keyValueRows: List<Pair<String, String>>
+    ) {
+        keyValueRows.forEach { rowData ->
+            val (title, value) = rowData
+            Row {
+                Text(title)
+                Text(
+                    text = value,
+                    style = TextStyle(
+                        color = Color(100, 50, 50),
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                )
+            }
+        }
+    }
+
 }
