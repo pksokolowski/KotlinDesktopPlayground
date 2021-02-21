@@ -35,15 +35,20 @@ class CountriesScreen : Screen {
                 onBackPress = { viewModel.goBack() }
             ) {
                 Column(
-                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    CountryData(
-                        countryInfo.value,
-                        isLoading.value,
-                        error.value
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.Bottom,
+                        modifier = Modifier
+                            .fillMaxHeight(0.4f)
+                    ) {
+                        CountryData(
+                            countryInfo.value,
+                            isLoading.value,
+                            error.value
+                        )
+                    }
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -126,7 +131,6 @@ class CountriesScreen : Screen {
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 8.dp)
             ) {
                 content()
             }
@@ -138,19 +142,24 @@ class CountriesScreen : Screen {
     private fun InfoRows(
         keyValueRows: List<Pair<String, String>>
     ) {
-        keyValueRows.forEach { rowData ->
-            val (title, value) = rowData
-            Row {
-                Text(title)
-                Text(
-                    text = value,
-                    style = TextStyle(
-                        color = Color(100, 50, 50),
-                        fontWeight = FontWeight.Bold
-                    ),
+        Column {
+            keyValueRows.forEach { rowData ->
+                val (title, value) = rowData
+                Row(
                     modifier = Modifier
-                        .padding(start = 8.dp)
-                )
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Text(title)
+                    Text(
+                        text = value,
+                        style = TextStyle(
+                            color = Color(100, 50, 50),
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                    )
+                }
             }
         }
     }
