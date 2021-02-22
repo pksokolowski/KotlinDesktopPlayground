@@ -63,6 +63,9 @@ class MainScreen : Screen {
                                 "A dialog" to {
                                     viewModel.showDialog()
                                 },
+                                "Coroutines :)" to {
+                                    viewModel.showCoroutinesScreen()
+                                }
                             )
                                 .sortedBy { it.first.length }
                                 .let {

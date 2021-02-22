@@ -1,5 +1,6 @@
 import androidx.compose.desktop.Window
 import androidx.compose.runtime.collectAsState
+import features.coroutines.presentation.CoroutinesScreen
 import features.countries.presentation.CountriesScreen
 import features.lists.ListsScreen
 import features.mainScreen.presentation.MainScreen
@@ -44,6 +45,9 @@ fun main() {
             }
             is NavDestination.ListsScreen -> {
                 ListsScreen()
+            }
+            is NavDestination.CoroutinesScreen -> {
+                CoroutinesScreen()
             }
             null -> {
                 null

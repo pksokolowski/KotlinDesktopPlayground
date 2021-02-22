@@ -6,4 +6,5 @@ sealed class NavDestination(val addToBackStack: Boolean = true) {
     object TypingSpeedScreen : NavDestination()
     object CountriesScreen : NavDestination()
     object ListsScreen : NavDestination()
+    object CoroutinesScreen : NavDestination()
 }

@@ -1,10 +1,10 @@
 package features.countries.presentation
 
-import MainAppBar
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -17,6 +17,7 @@ import features.countries.model.CountryInfo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import navigation.Screen
 import org.koin.java.KoinJavaComponent
+import views.ScreenContent
 
 class CountriesScreen : Screen {
     private val viewModel by KoinJavaComponent.inject(ICountriesViewModel::class.java)
@@ -31,7 +32,8 @@ class CountriesScreen : Screen {
             val isLoading = viewModel.isLoading.collectAsState()
             val error = viewModel.error.collectAsState()
 
-            CountriesScreenFrame(
+            ScreenContent(
+                title = "Countries",
                 onBackPress = { viewModel.goBack() }
             ) {
                 Column(
@@ -109,30 +111,6 @@ class CountriesScreen : Screen {
                         Text("try \"pl\", \"gb\", \"de\"")
                     }
                 }
-            }
-        }
-    }
-
-    @Composable
-    @Suppress("FunctionName")
-    private fun CountriesScreenFrame(
-        onBackPress: () -> Unit,
-        content: @Composable () -> Unit
-    ) {
-        Scaffold(
-            topBar = {
-                MainAppBar(
-                    icon = Icons.Default.ArrowBack,
-                    title = "Countries",
-                    onIconClick = { onBackPress() }
-                )
-            }
-        ) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                content()
             }
         }
     }

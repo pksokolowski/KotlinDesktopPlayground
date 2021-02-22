@@ -1,5 +1,7 @@
 package modules
 
+import features.coroutines.presentation.CoroutinesViewModel
+import features.coroutines.presentation.ICoroutinesViewModel
 import features.countries.presentation.CountriesViewModel
 import features.countries.presentation.ICountriesViewModel
 import features.lists.IListsViewModel
@@ -28,4 +30,5 @@ val mainModule = module {
     factory { CountriesViewModel(get(), get()) as ICountriesViewModel }
 
     factory { ListsViewModel(get()) as IListsViewModel }
+    factory { CoroutinesViewModel(get()) as ICoroutinesViewModel }
 }
