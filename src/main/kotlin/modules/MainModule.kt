@@ -30,5 +30,4 @@ val mainModule = module {
     factory { CountriesViewModel(get(), get()) as ICountriesViewModel }
 
     factory { ListsViewModel(get()) as IListsViewModel }
-    factory { CoroutinesViewModel(get()) as ICoroutinesViewModel }
 }

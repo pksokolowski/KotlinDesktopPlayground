@@ -6,6 +6,7 @@ import features.lists.ListsScreen
 import features.mainScreen.presentation.MainScreen
 import features.typingSpeed.presentation.TypingSpeedScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import modules.coroutineSamplesModule
 import modules.mainModule
 import modules.networkModule
 import navigation.NavDestination
@@ -17,8 +18,7 @@ import org.koin.java.KoinJavaComponent.inject
 @ExperimentalCoroutinesApi
 fun main() {
     startKoin {
-        modules(mainModule)
-        modules(networkModule)
+        modules(mainModule, networkModule, coroutineSamplesModule)
     }
 
     val navigator by inject(Navigator::class.java)
