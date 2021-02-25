@@ -27,6 +27,7 @@ class CoroutinesScreen : Screen {
         MaterialTheme {
             val input = viewModel.inputText.collectAsState()
             val output = viewModel.outputText.collectAsState()
+            val explanation = viewModel.explanationText.collectAsState()
 
             ScreenContent(
                 title = "Coroutines",
@@ -36,16 +37,35 @@ class CoroutinesScreen : Screen {
                     modifier = Modifier
                         .fillMaxHeight()
                 ) {
-                    Text(
-                        text = output.value,
+                    Row(
                         modifier = Modifier
                             .weight(1f)
-                            .fillMaxWidth()
-                            .background(Color.Black),
-                        style = TextStyle(
-                            color = Color.White
+                            .background(Color.Red)
+                    ) {
+                        Text(
+                            text = output.value,
+                            modifier = Modifier
+                                .weight(3f)
+                                .fillMaxHeight()
+                                .background(Color.Black)
+                                .padding(8.dp),
+                            style = TextStyle(
+                                color = Color.White
+                            )
                         )
-                    )
+
+                        Text(
+                            text = explanation.value,
+                            modifier = Modifier
+                                .weight(1.5f)
+                                .fillMaxHeight()
+                                .background(Color(15, 15, 15))
+                                .padding(8.dp),
+                            style = TextStyle(
+                                color = Color.White
+                            )
+                        )
+                    }
 
                     TextField(
                         value = input.value,

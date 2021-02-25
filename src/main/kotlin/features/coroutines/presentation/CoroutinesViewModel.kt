@@ -14,6 +14,7 @@ class CoroutinesViewModel(
     private val samplesScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     override val outputText = MutableStateFlow("")
+    override val explanationText = MutableStateFlow("")
     override val inputText = MutableStateFlow("")
 
     private val commandToSampleMapping = samples.map { sample ->
@@ -28,10 +29,12 @@ class CoroutinesViewModel(
 
     private fun handleCommand(command: String) {
         val sample = commandToSampleMapping[command] ?: run {
-            outputText.value = ""
             samplesScope.coroutineContext.cancelChildren()
+            explanationText.value = ""
+            outputText.value = ""
             return
         }
+        explanationText.value = sample.explanation
         sample.start(samplesScope, listOf(), ::output)
     }
 
