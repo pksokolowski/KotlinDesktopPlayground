@@ -6,6 +6,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import navigation.NavDestination
 import navigation.Navigator
+import java.lang.StringBuilder
 
 class CoroutinesViewModel(
     private val navigator: Navigator,
@@ -24,6 +25,7 @@ class CoroutinesViewModel(
 
     init {
         coroutineScope.animateTextHint("Type commands here") { inputText.value = it }
+        displayGeneralExplanation()
     }
 
     override fun setInput(input: String) {
@@ -35,7 +37,7 @@ class CoroutinesViewModel(
     private fun handleCommand(command: String) {
         val sample = commandToSampleMapping[command] ?: run {
             samplesScope.coroutineContext.cancelChildren()
-            explanationText.value = ""
+            displayGeneralExplanation()
             outputText.value = ""
             return
         }
@@ -45,6 +47,15 @@ class CoroutinesViewModel(
 
     private fun output(line: String) {
         outputText.value += "\n$line"
+    }
+
+    private fun displayGeneralExplanation() {
+        val builder = StringBuilder()
+        builder.appendLine("Type one of the below commands:\n")
+        commandToSampleMapping.keys.forEach { command ->
+            builder.appendLine(command)
+        }
+        explanationText.value = builder.toString()
     }
 
     override fun goBack() {
