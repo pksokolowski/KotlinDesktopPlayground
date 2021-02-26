@@ -1,6 +1,7 @@
 package features.coroutines.presentation
 
 import features.coroutines.domain.samples.CoroutinesSample
+import features.coroutines.presentation.state_animations.animateTextHint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import navigation.NavDestination
@@ -20,6 +21,10 @@ class CoroutinesViewModel(
     private val commandToSampleMapping = samples.map { sample ->
         sample.command to sample
     }.toMap()
+
+    init {
+        coroutineScope.animateTextHint("Type commands here") { inputText.value = it }
+    }
 
     override fun setInput(input: String) {
         if (input.isNotEmpty() && input.last() == '\n') return
