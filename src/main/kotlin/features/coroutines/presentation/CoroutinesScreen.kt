@@ -36,11 +36,11 @@ class CoroutinesScreen : Screen {
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
+                        .background(Color(15, 15, 15))
                 ) {
                     Row(
                         modifier = Modifier
                             .weight(1f)
-                            .background(Color.Red)
                     ) {
                         Text(
                             text = output.value,
@@ -54,12 +54,17 @@ class CoroutinesScreen : Screen {
                             )
                         )
 
+                        Spacer(
+                            modifier = Modifier
+                                .width(8.dp)
+                        )
+
                         Text(
                             text = explanation.value,
                             modifier = Modifier
                                 .weight(1.5f)
                                 .fillMaxHeight()
-                                .background(Color(15, 15, 15))
+                                .background(Color.Black)
                                 .padding(8.dp),
                             style = TextStyle(
                                 color = Color.White
@@ -72,7 +77,10 @@ class CoroutinesScreen : Screen {
                         onValueChange = viewModel::setInput,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight(Alignment.Bottom)
+                            .wrapContentHeight(Alignment.Bottom),
+                        textStyle = TextStyle(
+                            color = Color.White
+                        )
                     )
                 }
             }
