@@ -16,7 +16,7 @@ class WelcomeCoroutinesSample : CoroutinesSample(
 ) {
     override fun start(scope: CoroutineScope, args: List<String>, output: (String) -> Unit) {
         val name = args.getOrNull(0) ?: "unknown"
-        val times = args.getOrNull(1)?.toInt() ?: 1
+        val times = args.getOrNull(1)?.toIntOrNull() ?: 1
 
         output("Hello $name ! x$times")
     }

@@ -41,6 +41,8 @@ class CoroutinesViewModel(
     }
 
     private fun handleInput(input: String) {
+        outputText.value = ""
+
         val command = input.substringBefore(" ")
         val args = input
             .substringAfter(" ", "")
@@ -50,7 +52,6 @@ class CoroutinesViewModel(
         val sample = commandToSampleMapping[command] ?: run {
             samplesScope.coroutineContext.cancelChildren()
             displayGeneralExplanation()
-            outputText.value = ""
             return
         }
         explanationText.value = sample.explanation
