@@ -9,9 +9,12 @@ class WelcomeCoroutinesSample : CoroutinesSample(
     hello. 
     
     also showcasing the way such commands can be set up.
+    
+    This command accepts arguments like so:
+    welcome <name>
 """.trimIndent()
 ) {
     override fun start(scope: CoroutineScope, args: List<String>, output: (String) -> Unit) {
-        output("Hello!")
+        output("Hello! ${args.firstOrNull()}")
     }
 }

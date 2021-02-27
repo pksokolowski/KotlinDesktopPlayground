@@ -10,7 +10,7 @@ import java.lang.StringBuilder
 
 class CoroutinesViewModel(
     private val navigator: Navigator,
-    private val samples: List<CoroutinesSample>
+    samples: List<CoroutinesSample>
 ) : ICoroutinesViewModel {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val samplesScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -26,15 +26,22 @@ class CoroutinesViewModel(
     init {
         coroutineScope.animateTextHint("Type commands here") { inputText.value = it }
         displayGeneralExplanation()
+
+        inputText
+            .debounce(300)
+            .onEach { handleInput(it) }
+            .launchIn(coroutineScope)
     }
 
     override fun setInput(input: String) {
         if (input.isNotEmpty() && input.last() == '\n') return
         inputText.value = input
-        handleCommand(input)
     }
 
-    private fun handleCommand(command: String) {
+    private fun handleInput(input: String) {
+        val command = input.substringBefore(" ")
+        val args = input.substringAfter(" ", "").split(" ")
+
         val sample = commandToSampleMapping[command] ?: run {
             samplesScope.coroutineContext.cancelChildren()
             displayGeneralExplanation()
@@ -42,7 +49,7 @@ class CoroutinesViewModel(
             return
         }
         explanationText.value = sample.explanation
-        sample.start(samplesScope, listOf(), ::output)
+        sample.start(samplesScope, args, ::output)
     }
 
     private fun output(line: String) {
