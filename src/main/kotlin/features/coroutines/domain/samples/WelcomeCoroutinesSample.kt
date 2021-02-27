@@ -15,6 +15,9 @@ class WelcomeCoroutinesSample : CoroutinesSample(
 """.trimIndent()
 ) {
     override fun start(scope: CoroutineScope, args: List<String>, output: (String) -> Unit) {
-        output("Hello! ${args.firstOrNull()}")
+        val name = args.getOrNull(0) ?: "unknown"
+        val times = args.getOrNull(1)?.toInt() ?: 1
+
+        output("Hello $name ! x$times")
     }
 }

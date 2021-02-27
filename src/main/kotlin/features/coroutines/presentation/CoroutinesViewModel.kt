@@ -28,7 +28,9 @@ class CoroutinesViewModel(
         displayGeneralExplanation()
 
         inputText
-            .debounce(300)
+            .debounce(500)
+            .map { it.trim() }
+            .distinctUntilChanged()
             .onEach { handleInput(it) }
             .launchIn(coroutineScope)
     }
@@ -40,7 +42,10 @@ class CoroutinesViewModel(
 
     private fun handleInput(input: String) {
         val command = input.substringBefore(" ")
-        val args = input.substringAfter(" ", "").split(" ")
+        val args = input
+            .substringAfter(" ", "")
+            .split(" ")
+            .filter { it.isNotEmpty() }
 
         val sample = commandToSampleMapping[command] ?: run {
             samplesScope.coroutineContext.cancelChildren()
