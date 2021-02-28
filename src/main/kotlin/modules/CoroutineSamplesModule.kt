@@ -1,6 +1,7 @@
 package modules
 
 import features.coroutines.domain.samples.CoroutinesSample
+import features.coroutines.domain.samples.FanOutCoroutinesSample
 import features.coroutines.domain.samples.WelcomeCoroutinesSample
 import features.coroutines.presentation.CoroutinesViewModel
 import features.coroutines.presentation.ICoroutinesViewModel
@@ -12,4 +13,5 @@ val coroutineSamplesModule = module {
     factory { getKoin().getAll<CoroutinesSample>() }
 
     factory { WelcomeCoroutinesSample() } bind CoroutinesSample::class
+    factory { FanOutCoroutinesSample() } bind CoroutinesSample::class
 }

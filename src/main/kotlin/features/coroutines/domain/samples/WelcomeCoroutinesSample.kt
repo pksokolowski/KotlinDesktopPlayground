@@ -10,8 +10,9 @@ class WelcomeCoroutinesSample : CoroutinesSample(
     
     also showcasing the way such commands can be set up.
     
-    This command accepts arguments like so:
-    welcome <name>
+    args
+    name - the name of the person to greet
+    times - number of greetings
 """.trimIndent()
 ) {
     override fun start(scope: CoroutineScope, args: List<String>, output: (String) -> Unit) {

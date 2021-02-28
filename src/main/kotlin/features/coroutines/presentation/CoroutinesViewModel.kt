@@ -41,6 +41,7 @@ class CoroutinesViewModel(
     }
 
     private fun handleInput(input: String) {
+        samplesScope.coroutineContext.cancelChildren()
         outputText.value = ""
 
         val command = input.substringBefore(" ")
@@ -50,7 +51,6 @@ class CoroutinesViewModel(
             .filter { it.isNotEmpty() }
 
         val sample = commandToSampleMapping[command] ?: run {
-            samplesScope.coroutineContext.cancelChildren()
             displayGeneralExplanation()
             return
         }
@@ -58,6 +58,7 @@ class CoroutinesViewModel(
         sample.start(samplesScope, args, ::output)
     }
 
+    @Synchronized
     private fun output(line: String) {
         outputText.value += "\n$line"
     }
