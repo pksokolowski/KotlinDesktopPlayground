@@ -1,5 +1,6 @@
 package features.coroutines.presentation
 
+import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -42,34 +43,41 @@ class CoroutinesScreen : Screen {
                         modifier = Modifier
                             .weight(1f)
                     ) {
-                        Text(
-                            text = output.value,
+                        ScrollableColumn(
                             modifier = Modifier
                                 .weight(3f)
                                 .fillMaxHeight()
                                 .background(Color.Black)
                                 .padding(8.dp),
-                            style = TextStyle(
-                                color = Color.White
+                        ) {
+                            Text(
+                                text = output.value,
+
+                                style = TextStyle(
+                                    color = Color.White
+                                )
                             )
-                        )
+                        }
 
                         Spacer(
                             modifier = Modifier
                                 .width(8.dp)
                         )
 
-                        Text(
-                            text = explanation.value,
+                        ScrollableColumn(
                             modifier = Modifier
                                 .weight(1.5f)
                                 .fillMaxHeight()
                                 .background(Color.Black)
                                 .padding(8.dp),
-                            style = TextStyle(
-                                color = Color.White
+                        ) {
+                            Text(
+                                text = explanation.value,
+                                style = TextStyle(
+                                    color = Color.White
+                                )
                             )
-                        )
+                        }
                     }
 
                     TextField(
