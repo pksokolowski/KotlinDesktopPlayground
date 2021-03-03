@@ -81,9 +81,21 @@ class StructuredConcurrencyCoroutinesSample : CoroutinesSample(
             )
 
             withContext(CoroutineName("some name")) {
-                launch { blockingWork("work within withContext", 200.millis) }
+                launch { suspendingWork("work within withContext", 200.millis) }
             }
             output("--- this is after the withContext()'s block.")
+
+            output("""
+                
+                Using withContext instead of launch will still do the trick,
+                because withContext creates a new coroutine scope (and a new job) (but not a new coroutine)
+                lets start work directly in withContext block now
+            """.trimIndent())
+
+            withContext(CoroutineName("another name")){
+                suspendingWork("work started directly in withContext, no launch", 1500.millis)
+            }
+            output("--- this is after the withContext block")
         }
     }
 
