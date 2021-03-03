@@ -1,5 +1,7 @@
 package features.coroutines.presentation
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import features.coroutines.domain.samples.CoroutinesSample
 import features.coroutines.presentation.state_animations.animateTextHint
 import kotlinx.coroutines.*
@@ -17,26 +19,28 @@ class CoroutinesViewModel(
 
     override val outputText = MutableStateFlow("")
     override val explanationText = MutableStateFlow("")
-    override val inputText = MutableStateFlow("")
+    override val inputText = MutableStateFlow(TextFieldValue("", TextRange(0)))
 
     private val commandToSampleMapping = samples.map { sample ->
         sample.command to sample
     }.toMap()
 
     init {
-        coroutineScope.animateTextHint("Type commands here") { inputText.value = it }
-        displayGeneralExplanation()
+        coroutineScope.launch {
+            animateTextHint("Type commands here") { inputText.value = TextFieldValue(it, TextRange(0)) }
 
-        inputText
-            .debounce(500)
-            .map { it.trim() }
-            .distinctUntilChanged()
-            .onEach { handleInput(it) }
-            .launchIn(coroutineScope)
+            inputText
+                .debounce(500)
+                .map { it.text.trim() }
+                .distinctUntilChanged()
+                .onEach { handleInput(it) }
+                .launchIn(coroutineScope)
+        }
+        displayGeneralExplanation()
     }
 
-    override fun setInput(input: String) {
-        if (input.isNotEmpty() && input.last() == '\n') return
+    override fun setInput(input: TextFieldValue) {
+        if (input.text.isNotEmpty() && input.text.last() == '\n') return
         inputText.value = input
     }
 
