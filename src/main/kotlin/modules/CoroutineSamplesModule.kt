@@ -10,8 +10,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val coroutineSamplesModule = module {
-    factory { CoroutinesViewModel(get(), get()) as ICoroutinesViewModel }
-    factory { getKoin().getAll<CoroutinesSample>() }
+    factory { CoroutinesViewModel(get(), get(), get()) as ICoroutinesViewModel }
+    factory { getAll<CoroutinesSample>() }
 
     factory { WelcomeCoroutinesSample() } bind CoroutinesSample::class
     factory { FanOutCoroutinesSample() } bind CoroutinesSample::class

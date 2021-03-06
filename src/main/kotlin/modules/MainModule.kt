@@ -1,13 +1,13 @@
 package modules
 
-import features.coroutines.presentation.CoroutinesViewModel
-import features.coroutines.presentation.ICoroutinesViewModel
 import features.countries.presentation.CountriesViewModel
 import features.countries.presentation.ICountriesViewModel
 import features.lists.IListsViewModel
 import features.lists.ListsViewModel
 import features.mainScreen.presentation.IMainViewModel
 import features.mainScreen.presentation.MainViewModel
+import features.suggestions.SuggestionsProvider
+import features.suggestions.SuggestionsProviderImpl
 import features.typingSpeed.db.WordsDatabase
 import features.typingSpeed.presentation.ITypingSpeedViewModel
 import features.typingSpeed.presentation.TypingSpeedViewModel
@@ -26,6 +26,7 @@ val mainModule = module {
     factory { WordsDatabase() }
     factory { WordsRepository(get()) }
     factory { GetTypingSpeedVocabularyUseCase(get()) }
+    factory { SuggestionsProviderImpl() as SuggestionsProvider }
 
     factory { CountriesViewModel(get(), get()) as ICountriesViewModel }
 

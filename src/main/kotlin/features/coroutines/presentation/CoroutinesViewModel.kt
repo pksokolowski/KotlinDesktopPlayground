@@ -4,14 +4,17 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import features.coroutines.domain.samples.CoroutinesSample
 import features.coroutines.presentation.state_animations.animateTextHint
+import features.suggestions.SuggestionsProvider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import navigation.NavDestination
 import navigation.Navigator
+import views.unselectedLength
 import java.lang.StringBuilder
 
 class CoroutinesViewModel(
     private val navigator: Navigator,
+    private val suggestionsProvider: SuggestionsProvider,
     samples: List<CoroutinesSample>
 ) : ICoroutinesViewModel {
     private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -27,6 +30,9 @@ class CoroutinesViewModel(
 
     init {
         coroutineScope.launch {
+            val commands = samples.map { it.command }
+            suggestionsProvider.setSuggestions(commands)
+
             animateTextHint("Type commands here") { inputText.value = TextFieldValue(it, TextRange(0)) }
 
             inputText
@@ -41,7 +47,19 @@ class CoroutinesViewModel(
 
     override fun setInput(input: TextFieldValue) {
         if (input.text.isNotEmpty() && input.text.last() == '\n') return
-        inputText.value = input
+        val isBackSpace =
+            input.unselectedLength <= inputText.value.unselectedLength
+
+        if (isBackSpace) {
+            inputText.value = input
+        } else {
+            inputText.value = suggestCommand(input)
+        }
+    }
+
+    private fun suggestCommand(input: TextFieldValue): TextFieldValue {
+        val suggestion = suggestionsProvider.suggest(input.text) ?: return input
+        return TextFieldValue(suggestion, TextRange(input.text.length, suggestion.length + 1))
     }
 
     private fun handleInput(input: String) {
