@@ -14,4 +14,5 @@ val coroutineSamplesModule = module {
     factory { FanOutCoroutinesSample() } bind CoroutinesSample::class
     factory { StructuredConcurrencyCoroutinesSample() } bind CoroutinesSample::class
     factory { RetryFlowCoroutinesSample() } bind CoroutinesSample::class
+    factory { SupervisorScopeCoroutinesSample() } bind CoroutinesSample::class
 }
