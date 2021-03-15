@@ -9,5 +9,6 @@ interface IMainViewModel {
     fun gotoTypingSpeedScreen()
     fun gotoCountriesScreen()
     fun gotoListsScreen()
-    fun showCoroutinesScreen()
+    fun gotoCoroutinesScreen()
+    fun gotoAnimationsScreen()
 }

@@ -60,12 +60,15 @@ class MainScreen : Screen {
                                 "Recycler-view-like list" to {
                                     viewModel.gotoListsScreen()
                                 },
-                                "A dialog" to {
+                                "dialog" to {
                                     viewModel.showDialog()
                                 },
                                 "Coroutines :)" to {
-                                    viewModel.showCoroutinesScreen()
-                                }
+                                    viewModel.gotoCoroutinesScreen()
+                                },
+                                "Animations" to {
+                                    viewModel.gotoAnimationsScreen()
+                                },
                             )
                                 .sortedBy { it.first.length }
                                 .let {

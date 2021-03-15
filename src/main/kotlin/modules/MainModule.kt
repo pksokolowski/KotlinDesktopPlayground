@@ -1,5 +1,7 @@
 package modules
 
+import features.animations.presentation.AnimationsViewModel
+import features.animations.presentation.IAnimationsViewModel
 import features.countries.presentation.CountriesViewModel
 import features.countries.presentation.ICountriesViewModel
 import features.lists.IListsViewModel
@@ -29,6 +31,6 @@ val mainModule = module {
     factory { SuggestionsProviderImpl() as SuggestionsProvider }
 
     factory { CountriesViewModel(get(), get()) as ICountriesViewModel }
-
     factory { ListsViewModel(get()) as IListsViewModel }
+    factory { AnimationsViewModel(get()) as IAnimationsViewModel }
 }

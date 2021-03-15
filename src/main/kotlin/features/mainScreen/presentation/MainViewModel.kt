@@ -27,7 +27,11 @@ class MainViewModel(private val navigator: Navigator) : IMainViewModel {
         navigator.navigateTo(NavDestination.ListsScreen)
     }
 
-    override fun showCoroutinesScreen() {
+    override fun gotoCoroutinesScreen() {
         navigator.navigateTo(NavDestination.CoroutinesScreen)
+    }
+
+    override fun gotoAnimationsScreen() {
+        navigator.navigateTo(NavDestination.AnimationsScreen)
     }
 }
