@@ -3,12 +3,12 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.20"
-    id("org.jetbrains.compose") version "0.2.0-build132"
+    kotlin("jvm") version "1.4.31"
+    id("org.jetbrains.compose") version "0.4.0-build173"
 }
 
 group = "com.github.pksokolowski"
-version = "1.0"
+version = "1.0.0"
 
 repositories {
     jcenter()
@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     val koinVersion = "2.2.2"
-    val coroutinesVersion = "1.4.2"
+    val coroutinesVersion = "1.4.3"
 
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")

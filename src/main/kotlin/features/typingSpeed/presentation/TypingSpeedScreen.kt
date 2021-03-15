@@ -7,11 +7,11 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import navigation.Screen
@@ -70,12 +70,15 @@ class TypingSpeedScreen : Screen {
                                 Text("Save")
                             }
                         }
-                        Providers(AmbientContentAlpha provides ContentAlpha.medium) {
-                            val speed = lastTypingSpeed.value?.let {
-                                "$it ms per character"
-                            } ?: ""
-                            Text(speed)
-                        }
+
+                        val speed = lastTypingSpeed.value?.let {
+                            "$it ms per character"
+                        } ?: ""
+                        Text(
+                            text = speed,
+                            modifier = Modifier
+                                .alpha(0.5f)
+                        )
                     }
                 }
             }

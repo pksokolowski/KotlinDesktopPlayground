@@ -15,6 +15,7 @@ fun MainAppBar(icon: ImageVector, title: String, onIconClick: (() -> Unit)? = nu
         navigationIcon = {
             Icon(
                 imageVector = icon,
+                contentDescription = "icon of this screen",
                 modifier = Modifier
                     .clickable { onIconClick?.invoke() }
                     .padding(12.dp)

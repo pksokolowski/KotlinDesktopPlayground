@@ -65,10 +65,9 @@ class ListsScreen : Screen {
                             }
                         }
 
-
                         LazyColumn {
-                            items(outputList.value) { item ->
-                                Text(item)
+                            items(outputList.value.size) { i ->
+                                Text(outputList.value[i])
                             }
                         }
                     }

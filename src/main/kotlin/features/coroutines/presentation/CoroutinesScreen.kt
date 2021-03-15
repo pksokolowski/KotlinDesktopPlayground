@@ -1,8 +1,9 @@
 package features.coroutines.presentation
 
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -43,12 +44,13 @@ class CoroutinesScreen : Screen {
                         modifier = Modifier
                             .weight(1f)
                     ) {
-                        ScrollableColumn(
+                        Column(
                             modifier = Modifier
                                 .weight(3f)
                                 .fillMaxHeight()
                                 .background(Color.Black)
-                                .padding(8.dp),
+                                .padding(8.dp)
+                                .verticalScroll(rememberScrollState()),
                         ) {
                             Text(
                                 text = output.value,
@@ -64,12 +66,13 @@ class CoroutinesScreen : Screen {
                                 .width(8.dp)
                         )
 
-                        ScrollableColumn(
+                        Column(
                             modifier = Modifier
                                 .weight(1.5f)
                                 .fillMaxHeight()
                                 .background(Color.Black)
-                                .padding(8.dp),
+                                .padding(8.dp)
+                                .verticalScroll(rememberScrollState()),
                         ) {
                             Text(
                                 text = explanation.value,
