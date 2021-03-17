@@ -1,6 +1,7 @@
 package features.animations.presentation
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -8,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -29,6 +31,9 @@ class AnimationsScreen : Screen {
         MaterialTheme {
             val crossFadeContentVisible = viewModel.crossFadeContentVisible.collectAsState()
             val stateAnimationSlidePercentage = viewModel.stateAnimationSlidePercentage.collectAsState()
+            val autoAnimFullWidth = viewModel.autoAnimationSlideIsRightMost.collectAsState()
+
+            val autoAnimWidth: Int by animateIntAsState(if (autoAnimFullWidth.value) 100 else 0)
 
             ScreenContent(
                 title = "Animations",
@@ -82,7 +87,10 @@ class AnimationsScreen : Screen {
                             drawRect(
                                 color = Color.Gray,
                                 topLeft = Offset(x = 0f, y = 0f),
-                                size = Size(size.width, size.height / 2)
+                                size = Size(
+                                    width = size.width * autoAnimWidth / 100,
+                                    height = size.height / 2
+                                )
                             )
 
                             drawRect(
