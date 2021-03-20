@@ -18,4 +18,5 @@ val coroutineSamplesModule = module {
     factory { RetryFlowCoroutinesSample() } bind CoroutinesSample::class
     factory { SupervisorScopeCoroutinesSample() } bind CoroutinesSample::class
     factory { ApiCallsCoroutinesSample(get()) } bind CoroutinesSample::class
+    factory { RetryBuilderCoroutinesSample() } bind CoroutinesSample::class
 }
