@@ -23,7 +23,7 @@ class FactorialCoroutinesSample : CoroutinesSample(
         val availableProcessors = Runtime.getRuntime().availableProcessors()
         val remainder = number.remainder(availableProcessors.toBigInteger())
         val itemsPerWorker = number / availableProcessors.toBigInteger()
-        val expectedGroups = if (remainder == 0.toBigInteger()) availableProcessors else availableProcessors + 1
+        val expectedGroupsCount = if (remainder == 0.toBigInteger()) availableProcessors else availableProcessors + 1
 
         number.indexedEmissions()
             .groupN(itemsPerWorker, 500) // number / availableProcessors.toBigInteger()
@@ -36,7 +36,7 @@ class FactorialCoroutinesSample : CoroutinesSample(
                 }
             }
             .flowOn(Dispatchers.Default)
-            .groupN(expectedGroups, Long.MAX_VALUE)
+            .groupN(expectedGroupsCount)
             .map { products ->
                 productOf(products)
             }
@@ -69,6 +69,5 @@ class FactorialCoroutinesSample : CoroutinesSample(
             }
         }
     }
-
 
 }

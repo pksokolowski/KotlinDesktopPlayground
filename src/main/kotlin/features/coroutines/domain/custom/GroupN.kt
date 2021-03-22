@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.math.BigInteger
 
-fun <T> Flow<T>.groupN(n: BigInteger, partialBufferFlushDelay: Long): Flow<List<T>> {
+fun <T> Flow<T>.groupN(n: BigInteger, partialBufferFlushDelay: Long? = null): Flow<List<T>> {
     val upstream = this
     var buffer = mutableListOf<T>()
     var partialFlushJob: Job? = null
@@ -20,19 +20,18 @@ fun <T> Flow<T>.groupN(n: BigInteger, partialBufferFlushDelay: Long): Flow<List<
                 partialFlushJob?.cancel()
                 send(buffer)
                 buffer = mutableListOf()
-            } else {
+            } else if (partialBufferFlushDelay != null) {
                 partialFlushJob?.cancel()
                 partialFlushJob = launch {
                     delay(partialBufferFlushDelay)
                     if (buffer.isEmpty()) return@launch
                     send(buffer)
                     buffer = mutableListOf()
-                    partialFlushJob?.cancel()
                 }
             }
         }
     }
 }
 
-fun <T> Flow<T>.groupN(n: Int, partialBufferFlushDelay: Long): Flow<List<T>> =
+fun <T> Flow<T>.groupN(n: Int, partialBufferFlushDelay: Long? = null): Flow<List<T>> =
     this.groupN(n.toBigInteger(), partialBufferFlushDelay)
