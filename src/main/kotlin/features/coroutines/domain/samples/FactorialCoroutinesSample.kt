@@ -19,15 +19,17 @@ class FactorialCoroutinesSample : CoroutinesSample(
 
         output("computing factorial of $number")
 
-        val availableProcessors = Runtime.getRuntime().availableProcessors()
-        val remainder = number.remainder(availableProcessors.toBigInteger())
-        val itemsPerWorker = number / availableProcessors.toBigInteger()
-        val expectedGroupsCount = if (remainder == 0.toBigInteger()) availableProcessors else availableProcessors + 1
+        val processorsCount = Runtime.getRuntime().availableProcessors()
+
+        val concurrency = if (number < processorsCount.toBigInteger() * 2.toBigInteger()) 1 else processorsCount
+        val remainder = number.remainder(concurrency.toBigInteger())
+        val itemsPerWorker = number / concurrency.toBigInteger()
+        val expectedGroupsCount = if (remainder == 0.toBigInteger()) concurrency else concurrency + 1
 
         number.indexedEmissions()
             .groupN(itemsPerWorker, 500) // number / availableProcessors.toBigInteger()
             .filterNot { it.isEmpty() }
-            .flatMapMerge(availableProcessors) { numbers ->
+            .flatMapMerge(concurrency) { numbers ->
                 flow {
                     if (numbers.isNotEmpty()) {
                         emit(productOf(numbers))
