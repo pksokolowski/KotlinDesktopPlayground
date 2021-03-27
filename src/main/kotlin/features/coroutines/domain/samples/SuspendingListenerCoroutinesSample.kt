@@ -34,6 +34,11 @@ class SuspendingListenerCoroutinesSample : CoroutinesSample(
                 })
             }
             output("got: $result")
+
+            // alternative, with extension function setup
+
+            val anotherResult = api.getSomethingById(BREAD)
+            output("got another: $anotherResult")
         }
     }
 
@@ -55,5 +60,20 @@ class SuspendingListenerCoroutinesSample : CoroutinesSample(
                 WINE -> callback.onError(IllegalArgumentException("prohibition!"))
             }
         }
+    }
+
+    // -------- adapting api to provide suspend function for more convenient use
+
+    @Throws(IllegalArgumentException::class)
+    private suspend fun SomeApi.getSomethingById(resource: Resource): String = suspendCoroutine { continuation ->
+        getSomethingById(resource, object : Callback {
+            override fun onResult(result: String) {
+                continuation.resume(result)
+            }
+
+            override fun onError(throwable: Throwable) {
+                continuation.resumeWithException(throwable)
+            }
+        })
     }
 }
