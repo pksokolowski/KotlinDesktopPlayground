@@ -21,4 +21,5 @@ val coroutineSamplesModule = module {
     factory { RetryBuilderCoroutinesSample() } bind CoroutinesSample::class
     factory { FactorialCoroutinesSample() } bind CoroutinesSample::class
     factory { SuspendingListenerCoroutinesSample() } bind CoroutinesSample::class
+    factory { AccidentalUncancellabilityCoroutinesSample() } bind CoroutinesSample::class
 }
